@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ALSegmentView",
+        "repositoryURL": "git@github.com:alobanov11/ALSegmentView.git",
+        "state": {
+          "branch": "main",
+          "revision": "7cf002421527747c43df75eb12aa26d94dd76e71",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
