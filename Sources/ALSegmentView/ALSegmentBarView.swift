@@ -97,16 +97,25 @@ final class ALSegmentBarView: UIView
         let width = self.frame.width
         let multiplier = point.x / width
         let item = width / CGFloat(self.segments.count)
+        self.updateSelectedButton(with: Int(multiplier))
         self.selectedSeparatorLeadingConstraint.constant = item * multiplier
     }
     
     @objc
     private func didTapOnSegment(_ sender: UIButton) {
+        self.updateSelectedButton(with: sender.tag)
+        self.onTapOnSegment?(sender.tag)
+    }
+    
+    private func updateSelectedButton(with index: Int) {
         self.stackView.arrangedSubviews
             .compactMap { $0 as? UIButton }
-            .forEach { $0.setTitleColor(self.styles.color, for: .normal) }
-        sender.setTitleColor(self.styles.selectedColor, for: .normal)
-        self.onTapOnSegment?(sender.tag)
+            .enumerated()
+            .forEach {
+                $0.element.setTitleColor(index == $0.offset
+                                            ? self.styles.selectedColor
+                                            : self.styles.color, for: .normal)
+            }
     }
     
     private func initializeView() {

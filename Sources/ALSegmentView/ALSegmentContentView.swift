@@ -6,6 +6,6 @@ import UIKit
 
 public protocol IALSegmentContentView: UIView
 {
-    var onSegmentScroll: (() -> Void)? { get set }
-    var segmentScrollView: IALCollaborativeScroll { get }
+    var onScroll: (() -> Void)? { get set }
+    var scrollView: UIScrollView { get }
 }

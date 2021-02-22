@@ -78,7 +78,7 @@ public final class ALSegmentView: UIView
         else {
             return nil
         }
-        return self.segments[currentIndex].content.segmentScrollView
+        return self.segments[currentIndex].content.scrollView
     }
     
     private var lastNestedScrollView: UIScrollView?
@@ -146,8 +146,8 @@ extension ALSegmentView: UICollectionViewDataSource, UICollectionViewDelegateFlo
             for: indexPath
         )
         let contentView = self.segments[indexPath.item].content
-        contentView.onSegmentScroll = { [weak self] in self?.syncMainScrollIfNeeded() }
-        contentView.segmentScrollView.alwaysBounceVertical = true
+        contentView.onScroll = { [weak self] in self?.syncMainScrollIfNeeded() }
+        contentView.scrollView.alwaysBounceVertical = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         cell.contentView.addSubview(contentView)
@@ -194,7 +194,7 @@ private extension ALSegmentView
             verticalFittingPriority: .fittingSizeLevel
         ).height ?? .zero) + self.barStyles.height
         self.headerHeightConstraint.constant = headerHeight
-        self.segments.map { $0.content.segmentScrollView }.forEach {
+        self.segments.map { $0.content.scrollView }.forEach {
             $0.contentInset = .init(top: headerHeight, left: 0, bottom: 0, right: 0)
             if #available(iOS 11.1, *) {
                 $0.verticalScrollIndicatorInsets = .init(top: headerHeight, left: 0, bottom: 0, right: 0)
@@ -231,7 +231,7 @@ private extension ALSegmentView
             barHeight: self.barStyles.height
         )
         self.segments
-            .map { $0.content.segmentScrollView }
+            .map { $0.content.scrollView }
             .filter { $0 != nestedScrollView }
             .forEach {
                 if ctx.nestedY > 0 && $0.contentOffset.y < 0 { $0.contentOffset.y = -ctx.barHeight }
