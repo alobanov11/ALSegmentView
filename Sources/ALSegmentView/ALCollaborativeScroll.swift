@@ -9,11 +9,6 @@ public protocol IALCollaborativeScroll: UIScrollView {
 
 open class ALCollaborativeScrollView: UIScrollView, UIGestureRecognizerDelegate, IALCollaborativeScroll
 {
-    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
-        return view?.isKind(of: UIControl.self) ?? false ? view : nil
-    }
-    
     public func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer

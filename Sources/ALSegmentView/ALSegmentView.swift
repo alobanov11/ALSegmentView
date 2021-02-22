@@ -109,6 +109,15 @@ public final class ALSegmentView: UIView
         super.layoutSubviews()
         self.layoutHeaderIfNeeded()
     }
+    
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        if view == self.mainScrollView {
+            let subview = self.pageCollectionView.hitTest(point, with: event)
+            return subview?.isKind(of: UIControl.self) ?? false ? subview : view
+        }
+        return view
+    }
 }
 
 // MARK: - Public
