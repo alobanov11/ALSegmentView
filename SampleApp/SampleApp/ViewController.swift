@@ -58,10 +58,6 @@ final class ContentView: UIView, IALSegmentContentView
             UICollectionViewCell.self,
             forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self)
         )
-        self.collectionView.contentInsetAdjustmentBehavior = .never
-        if #available(iOS 13.0, *) {
-            self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
         self.addSubview(self.collectionView)
         NSLayoutConstraint.activate([
             self.collectionView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -117,14 +113,22 @@ final class ViewController: UIViewController
             headerView: HeaderView(),
             segments: Array(0...2).map {
                 ALSegment("\($0)") { ContentView() }
-            }
+            },
+            barStyles: .init(height: 42,
+                             font: .systemFont(ofSize: 14, weight: .regular),
+                             color: .black,
+                             selectedColor: .systemBlue,
+                             borderColor: .darkGray,
+                             backgroundColor: .cyan,
+                             borderHeight: 2)
         )
         return view
     }()
     
     override func loadView() {
+        self.title = "Hello"
         self.view = self.segmentView
-        self.segmentView.backgroundColor = .white
+        self.segmentView.backgroundColor = .brown
     }
 }
 
