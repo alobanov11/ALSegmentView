@@ -105,9 +105,9 @@ public final class ALSegmentView: UIView
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layoutHeaderIfNeeded()
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        self.layoutHeader()
     }
     
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -186,7 +186,7 @@ extension ALSegmentView: UICollectionViewDataSource, UICollectionViewDelegateFlo
 
 private extension ALSegmentView
 {
-    func layoutHeaderIfNeeded() {
+    func layoutHeader() {
         let headerView = self.headerContainerView.subviews.first { $0 != self.barView }
         let headerHeight = (headerView?.systemLayoutSizeFitting(
             .init(width: self.frame.width, height: 0),
