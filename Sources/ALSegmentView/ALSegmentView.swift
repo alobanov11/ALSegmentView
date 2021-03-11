@@ -36,6 +36,14 @@ public final class ALSegmentView: UIView
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         scrollView.alwaysBounceVertical = true
+        if let refreshControl = self.refreshControl {
+            if #available(iOS 10.0, *) {
+                scrollView.refreshControl = refreshControl
+            }
+            else {
+                scrollView.addSubview(refreshControl)
+            }
+        }
         return scrollView
     }()
     
@@ -59,14 +67,6 @@ public final class ALSegmentView: UIView
         collectionView.dataSource = self
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
-        }
-        if let refreshControl = self.refreshControl {
-            if #available(iOS 10.0, *) {
-                collectionView.refreshControl = refreshControl
-            }
-            else {
-                collectionView.addSubview(refreshControl)
-            }
         }
         return collectionView
     }()
