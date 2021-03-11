@@ -109,6 +109,11 @@ public final class ALSegmentView: UIView
         super.didMoveToSuperview()
         self.layoutHeader()
     }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layoutHeader()
+    }
     
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
