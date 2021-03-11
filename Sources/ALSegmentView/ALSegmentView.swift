@@ -47,15 +47,12 @@ public final class ALSegmentView: UIView
     }()
 
     private lazy var mainStackView: UIStackView = {
-        let dummyView = UIView()
-        let stackView = UIStackView(arrangedSubviews: [self.headerContainerView, dummyView])
+        let stackView = UIStackView(arrangedSubviews: [self.headerContainerView])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        dummyView.isUserInteractionEnabled = false
-        dummyView.backgroundColor = .clear
         return stackView
     }()
     
@@ -293,14 +290,13 @@ private extension ALSegmentView
             self.mainScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             self.mainScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
-        let mainStackViewHeightAnchor = self.mainStackView.heightAnchor.constraint(equalTo: self.heightAnchor)
-        mainStackViewHeightAnchor.priority = .defaultLow
         NSLayoutConstraint.activate([
             self.mainStackView.topAnchor.constraint(equalTo: self.mainScrollView.topAnchor),
             self.mainStackView.leadingAnchor.constraint(equalTo: self.mainScrollView.leadingAnchor),
             self.mainStackView.trailingAnchor.constraint(equalTo: self.mainScrollView.trailingAnchor),
             self.mainStackView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
-            mainStackViewHeightAnchor,
+            self.mainStackView.centerYAnchor.constraint(equalTo: self.mainScrollView.centerYAnchor),
+            self.mainStackView.centerXAnchor.constraint(equalTo: self.mainScrollView.centerXAnchor),
             self.headerHeightConstraint,
         ])
         if let headerView = self.headerView {
