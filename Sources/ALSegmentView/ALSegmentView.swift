@@ -60,6 +60,14 @@ public final class ALSegmentView: UIView
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
+        if let refreshControl = self.refreshControl {
+            if #available(iOS 10.0, *) {
+                collectionView.refreshControl = refreshControl
+            }
+            else {
+                collectionView.addSubview(refreshControl)
+            }
+        }
         return collectionView
     }()
     
@@ -84,6 +92,7 @@ public final class ALSegmentView: UIView
     private var lastNestedScrollView: UIScrollView?
 
     private let headerView: UIView?
+    private let refreshControl: UIRefreshControl?
     private let segments: [ALSegment]
     private let barStyles: ALSegmentBarStyles
     
@@ -92,9 +101,11 @@ public final class ALSegmentView: UIView
     public init(
         headerView: UIView? = nil,
         segments: [ALSegment],
-        barStyles: ALSegmentBarStyles
+        barStyles: ALSegmentBarStyles,
+        refreshControl: UIRefreshControl? = nil
     ) {
         self.headerView = headerView
+        self.refreshControl = refreshControl
         self.segments = segments
         self.barStyles = barStyles
         super.init(frame: .zero)
