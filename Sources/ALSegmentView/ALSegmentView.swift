@@ -12,7 +12,6 @@ public final class ALSegmentView: UIView
 
     private lazy var headerContainerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -296,6 +295,7 @@ private extension ALSegmentView
             self.mainStackView.leadingAnchor.constraint(equalTo: self.mainScrollView.leadingAnchor),
             self.mainStackView.trailingAnchor.constraint(equalTo: self.mainScrollView.trailingAnchor),
             self.mainStackView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
+            self.mainStackView.heightAnchor.constraint(equalTo: self.heightAnchor),
             self.headerHeightConstraint,
         ])
         if let headerView = self.headerView {
