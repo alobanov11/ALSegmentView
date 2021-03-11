@@ -47,12 +47,15 @@ public final class ALSegmentView: UIView
     }()
 
     private lazy var mainStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [self.headerContainerView])
+        let dummyView = UIView()
+        let stackView = UIStackView(arrangedSubviews: [self.headerContainerView, dummyView])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        dummyView.isUserInteractionEnabled = false
+        dummyView.backgroundColor = .clear
         return stackView
     }()
     
