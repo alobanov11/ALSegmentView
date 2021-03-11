@@ -293,12 +293,14 @@ private extension ALSegmentView
             self.mainScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             self.mainScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
+        let mainStackViewHeightAnchor = self.mainStackView.heightAnchor.constraint(equalTo: self.heightAnchor)
+        mainStackViewHeightAnchor.priority = .defaultLow
         NSLayoutConstraint.activate([
             self.mainStackView.topAnchor.constraint(equalTo: self.mainScrollView.topAnchor),
             self.mainStackView.leadingAnchor.constraint(equalTo: self.mainScrollView.leadingAnchor),
             self.mainStackView.trailingAnchor.constraint(equalTo: self.mainScrollView.trailingAnchor),
             self.mainStackView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
-            self.mainStackView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            mainStackViewHeightAnchor,
             self.headerHeightConstraint,
         ])
         if let headerView = self.headerView {
