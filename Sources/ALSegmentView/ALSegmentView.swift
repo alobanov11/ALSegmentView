@@ -46,6 +46,16 @@ public final class ALSegmentView: UIView
         }
         return scrollView
     }()
+
+    private lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.headerContainerView])
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private lazy var pageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -261,14 +271,16 @@ private extension ALSegmentView
 private extension ALSegmentView
 {
     func initializeView() {
-        self.addSubview(self.pageCollectionView)
-        self.addSubview(self.mainScrollView)
-        self.mainScrollView.addSubview(self.headerContainerView)
         self.headerContainerView.addSubview(self.barView)
+        self.mainScrollView.addSubview(self.mainStackView)
+
         if let headerView = self.headerView {
             headerView.translatesAutoresizingMaskIntoConstraints = false
             self.headerContainerView.addSubview(headerView)
         }
+
+        self.addSubview(self.pageCollectionView)
+        self.addSubview(self.mainScrollView)
     }
     
     func initializeLayout() {
@@ -280,10 +292,10 @@ private extension ALSegmentView
             self.mainScrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
         NSLayoutConstraint.activate([
-            self.headerContainerView.topAnchor.constraint(equalTo: self.mainScrollView.topAnchor),
-            self.headerContainerView.leadingAnchor.constraint(equalTo: self.mainScrollView.leadingAnchor),
-            self.headerContainerView.trailingAnchor.constraint(equalTo: self.mainScrollView.trailingAnchor),
-            self.headerContainerView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
+            self.mainStackView.topAnchor.constraint(equalTo: self.mainScrollView.topAnchor),
+            self.mainStackView.leadingAnchor.constraint(equalTo: self.mainScrollView.leadingAnchor),
+            self.mainStackView.trailingAnchor.constraint(equalTo: self.mainScrollView.trailingAnchor),
+            self.mainStackView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
             self.headerHeightConstraint,
         ])
         if let headerView = self.headerView {
