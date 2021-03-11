@@ -82,9 +82,9 @@ public final class ALSegmentView: UIView
     }
     
     private var lastNestedScrollView: UIScrollView?
-    
+
+    private let headerView: UIView?
     private let segments: [ALSegment]
-    
     private let barStyles: ALSegmentBarStyles
     
     // MARK: - Initialization
@@ -94,11 +94,12 @@ public final class ALSegmentView: UIView
         segments: [ALSegment],
         barStyles: ALSegmentBarStyles
     ) {
+        self.headerView = headerView
         self.segments = segments
         self.barStyles = barStyles
         super.init(frame: .zero)
-        self.initializeView(with: headerView)
-        self.initializeLayout(with: headerView)
+        self.initializeView()
+        self.initializeLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -192,8 +193,7 @@ extension ALSegmentView: UICollectionViewDataSource, UICollectionViewDelegateFlo
 private extension ALSegmentView
 {
     func layoutHeader() {
-        let headerView = self.headerContainerView.subviews.first { $0 != self.barView }
-        let headerHeight = (headerView?.systemLayoutSizeFitting(
+        let headerHeight = (self.headerView?.systemLayoutSizeFitting(
             .init(width: self.frame.width, height: 0),
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
@@ -249,18 +249,19 @@ private extension ALSegmentView
 
 private extension ALSegmentView
 {
-    func initializeView(with headerView: UIView?) {
+    func initializeView() {
         self.addSubview(self.pageCollectionView)
         self.addSubview(self.mainScrollView)
         self.mainScrollView.addSubview(self.headerContainerView)
         self.headerContainerView.addSubview(self.barView)
-        if let headerView = headerView {
+        if let headerView = self.headerView {
             headerView.translatesAutoresizingMaskIntoConstraints = false
             self.headerContainerView.addSubview(headerView)
         }
     }
     
-    func initializeLayout(with headerView: UIView?) {
+    func initializeLayout() {
+        self.headerHeightConstraint.priority = .defaultLow
         NSLayoutConstraint.activate([
             self.mainScrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.mainScrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
@@ -274,7 +275,7 @@ private extension ALSegmentView
             self.headerContainerView.widthAnchor.constraint(equalTo: self.mainScrollView.widthAnchor),
             self.headerHeightConstraint,
         ])
-        if let headerView = headerView {
+        if let headerView = self.headerView {
             NSLayoutConstraint.activate([
                 headerView.topAnchor.constraint(equalTo: self.headerContainerView.topAnchor),
                 headerView.leadingAnchor.constraint(equalTo: self.headerContainerView.leadingAnchor),
